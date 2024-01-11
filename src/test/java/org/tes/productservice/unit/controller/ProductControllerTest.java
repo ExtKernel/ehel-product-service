@@ -38,12 +38,18 @@ public class ProductControllerTest {
 
     @Test
     public void saveTest() throws Exception {
-        String title = "product";
+        ProductEntity product = new ProductEntity();
+        String title = "the title";
         String condition = "used";
         int price = 100;
         int quantity = 0;
 
-        assertThat(productController.save(title, condition, price, quantity).getStatusCode()).isEqualTo(HttpStatus.OK);
+        product.setTitle(title);
+        product.setCondition(condition);
+        product.setPrice(price);
+        product.setQuantity(quantity);
+
+        assertThat(productController.save(product).getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 
 // To be implemented

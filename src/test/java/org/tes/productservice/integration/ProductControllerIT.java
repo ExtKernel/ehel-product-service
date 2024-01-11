@@ -37,12 +37,18 @@ public class ProductControllerIT {
 
     @Test
     public void saveTest() throws Exception {
+        ProductEntity product1 = new ProductEntity();
         String title = "the title";
         String condition = "used";
         int price = 100;
         int quantity = 0;
 
-        mvc.perform(post("/?title=" + title + "&condition=" + condition + "&price=" + price + "&quantity=" + quantity).contentType(MediaType.APPLICATION_JSON))
+        product1.setTitle(title);
+        product1.setCondition(condition);
+        product1.setPrice(price);
+        product1.setQuantity(quantity);
+
+        mvc.perform(post("/").contentType(MediaType.APPLICATION_JSON).content(asJsonString(product1)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.title", is(title)))

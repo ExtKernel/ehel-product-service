@@ -17,13 +17,7 @@ public class ProductController {
     private ProductService productService;
 
     @PostMapping()
-    public ResponseEntity<Optional<ProductEntity>> save(@RequestParam String title, @RequestParam String condition, @RequestParam int price, @RequestParam int quantity) {
-        ProductEntity product = new ProductEntity();
-        product.setTitle(title);
-        product.setCondition(condition);
-        product.setPrice(price);
-        product.setQuantity(quantity);
-
+    public ResponseEntity<Optional<ProductEntity>> save(@RequestBody ProductEntity product) {
         return ResponseEntity.ok(productService.save(product));
     }
 

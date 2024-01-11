@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @AllArgsConstructor
 @Service
-public class LaptopService {
+public class LaptopProductService {
 
     private LaptopProductEntityRepository laptopRepository;
 

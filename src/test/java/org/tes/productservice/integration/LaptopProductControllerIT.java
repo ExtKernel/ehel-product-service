@@ -12,8 +12,10 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import org.tes.productservice.ProductServiceApplication;
-import org.tes.productservice.model.ProductEntity;
-import org.tes.productservice.service.ProductService;
+import org.tes.productservice.model.LaptopProductEntity;
+import org.tes.productservice.service.LaptopProductService;
+
+import java.util.Date;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -27,15 +29,15 @@ import static org.tes.productservice.TestUtils.*;
 @TestPropertySource(
         locations = "classpath:application-integrationtest.properties")
 @Transactional
-public class ProductControllerIT {
+public class LaptopProductControllerIT {
 
     @Autowired
     private MockMvc mvc;
 
     @Autowired
-    private ProductService productService;
+    private LaptopProductService laptopProductService;
 
-    private static ProductEntity product;
+    private static LaptopProductEntity laptopProduct;
 
     @BeforeAll
     public static void setUpEntity() {
@@ -43,15 +45,27 @@ public class ProductControllerIT {
         String condition = "Used";
         int price = 0;
         int quantity = 0;
-        product = getMockedProductEntity(title, condition, price, quantity);
+        String cpu = "Intel Core i5";
+        int ramCapacity = 0;
+        String ramType = "DDR4";
+        String gpuType = "Integrated";
+        String goodFor = "Browsing internet";
+        Date releaseDate = new Date(1153785600000L);
+        boolean comesWithCharger = true;
+        String screenType = "IPS";
+        String screenResolution = "1920x1080";
+        boolean hasBacklit = false;
+        String model = "ThinkPad X1";
+        laptopProduct = getMockedLaptopProductEntity(title, condition, price, quantity, cpu, ramCapacity, ramType, gpuType, goodFor, releaseDate,
+                comesWithCharger, screenType, screenResolution, hasBacklit, model);
     }
 
     @Test
     public void saveTest() throws Exception {
-        mvc.perform(post("/").contentType(MediaType.APPLICATION_JSON).content(asJsonString(product)))
+        mvc.perform(post("/laptop").contentType(MediaType.APPLICATION_JSON).content(asJsonString(laptopProduct)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(generateJsonPathExpressions(null, product));
+                .andExpect(generateJsonPathExpressions(null, laptopProduct));
     }
 
 // To be implemented
@@ -62,37 +76,37 @@ public class ProductControllerIT {
 
     @Test
     public void findAllTest() throws Exception {
-        productService.save(product);
+        laptopProductService.save(laptopProduct);
 
-        mvc.perform(get("/").contentType(MediaType.APPLICATION_JSON))
+        mvc.perform(get("/laptop").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(generateJsonPathExpressions(0, product));
+                .andExpect(generateJsonPathExpressions(0, laptopProduct));
     }
 
     @Test
     public void findByIdTest() throws Exception {
-        productService.save(product);
+        laptopProductService.save(laptopProduct);
 
-        mvc.perform(get("/{id}", product.getId()).contentType(MediaType.APPLICATION_JSON))
+        mvc.perform(get("/laptop/{id}", laptopProduct.getId()).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(generateJsonPathExpressions(null, product));
+                .andExpect(generateJsonPathExpressions(null, laptopProduct));
     }
 
     @Test
     public void deleteByIdTest() throws Exception {
-        productService.save(product);
+        laptopProductService.save(laptopProduct);
 
-        mvc.perform(delete("/{id}", product.getId()).contentType(MediaType.APPLICATION_JSON))
+        mvc.perform(delete("/laptop/{id}", laptopProduct.getId()).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void deleteAllTest() throws Exception {
-        productService.save(product);
+        laptopProductService.save(laptopProduct);
 
-        mvc.perform(delete("/"))
+        mvc.perform(delete("/laptop"))
                 .andExpect(status().isOk());
     }
 }

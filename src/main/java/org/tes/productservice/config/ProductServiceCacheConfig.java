@@ -21,7 +21,7 @@ public class ProductServiceCacheConfig {
 
     @Bean
     public CacheManager cacheManager() {
-        CaffeineCacheManager cacheManager = new CaffeineCacheManager("ProductCache");
+        CaffeineCacheManager cacheManager = new CaffeineCacheManager("ProductCache", "LaptopProductCache");
         cacheManager.setCaffeine(caffeineCacheBuilder());
 
         return cacheManager;

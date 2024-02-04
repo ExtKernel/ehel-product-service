@@ -17,12 +17,12 @@ public class LaptopProductController {
 
     private LaptopProductService laptopProductService;
 
-    @PostMapping()
+    @PostMapping("/secured")
     public ResponseEntity<Optional<LaptopProductEntity>> saveLaptop(@RequestBody LaptopProductEntity laptopProduct) {
         return ResponseEntity.ok(laptopProductService.save(laptopProduct));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/secured/{id}")
     public ResponseEntity<Optional<LaptopProductEntity>> updateLaptop(@RequestParam long id, @RequestBody LaptopProductEntity updatedLaptopProduct) {
         Optional<LaptopProductEntity> foundLaptopProduct = laptopProductService.findById(id);
 
@@ -49,7 +49,7 @@ public class LaptopProductController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/secured/{id}")
     public ResponseEntity<String> deleteLaptopById(@PathVariable long id) {
         Optional<LaptopProductEntity> laptopProductToDelete = laptopProductService.findById(id);
 
@@ -61,7 +61,7 @@ public class LaptopProductController {
         }
     }
 
-    @DeleteMapping()
+    @DeleteMapping("/secured")
     public ResponseEntity<Boolean> deleteAllLaptops() {
         return ResponseEntity.ok(laptopProductService.deleteAll());
     }

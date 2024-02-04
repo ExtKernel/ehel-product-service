@@ -10,18 +10,19 @@ import org.tes.productservice.service.ProductService;
 import java.util.List;
 import java.util.Optional;
 
+@RequestMapping("/generic")
 @AllArgsConstructor
 @RestController
 public class ProductController {
 
     private ProductService productService;
 
-    @PostMapping()
+    @PostMapping("/secured")
     public ResponseEntity<Optional<ProductEntity>> save(@RequestBody ProductEntity product) {
         return ResponseEntity.ok(productService.save(product));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/secured/{id}")
     public ResponseEntity<Optional<ProductEntity>> update(@RequestParam long id, @RequestBody ProductEntity updatedProduct) {
         Optional<ProductEntity> foundProduct = productService.findById(id);
 
@@ -50,7 +51,7 @@ public class ProductController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/secured/{id}")
     public ResponseEntity<String> deleteById(@PathVariable long id) {
         Optional<ProductEntity> productToDelete = productService.findById(id);
 
@@ -63,7 +64,7 @@ public class ProductController {
         }
     }
 
-    @DeleteMapping()
+    @DeleteMapping("/secured")
     public ResponseEntity<Boolean> deleteAll() {
         return ResponseEntity.ok(productService.deleteAll());
     }

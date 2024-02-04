@@ -32,3 +32,12 @@ spring:
       enabled: true
       cache:
         enabled: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://${KEYCLOAK_BASE_URI}/realms/${REALM}
+        opaquetoken:
+          client-secret: ${CLIENT_SECRET}
+          client-id: product-service
+          introspection-uri: http://${KEYCLOAK_BASE_URI}/realms/${REALM}/protocol/openid-connect/token/introspect

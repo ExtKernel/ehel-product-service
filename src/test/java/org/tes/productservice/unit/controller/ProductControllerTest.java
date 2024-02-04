@@ -35,11 +35,16 @@ public class ProductControllerTest {
 
     @BeforeAll
     public static void setUpEntity() {
-        String title = "A laptop";
+        String title = "A product";
         String condition = "Used";
         int price = 0;
         int quantity = 0;
-        product = getMockedProductEntity(title, condition, price, quantity);
+        product = getMockedProductEntity(
+                title,
+                condition,
+                price,
+                quantity
+        );
     }
 
     @BeforeEach
@@ -49,8 +54,11 @@ public class ProductControllerTest {
     }
 
     @Test
-    public void saveTest() throws Exception {
-        assertThat(productController.save(product).getStatusCode()).isEqualTo(HttpStatus.OK);
+    public void save_WithProductEntity_ShouldReturnOk() throws Exception {
+        assertThat(productController
+                .save(product)
+                .getStatusCode())
+                .isEqualTo(HttpStatus.OK);
     }
 
 // To be implemented
@@ -60,37 +68,85 @@ public class ProductControllerTest {
 //    }
 
     @Test
-    public void findAllTest() throws Exception {
+    public void findAll_WithEntityList_ShouldReturnOk() throws Exception {
         List<ProductEntity> productList = new ArrayList<>();
         productList.add(product);
 
         when(productService.findAll()).thenReturn(productList);
 
-        assertThat(productController.findAll().getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(productController.findAll().getBody()).size().isEqualTo(1);
-        assertThat(productController.findAll().getBody().get(0).getTitle()).isEqualTo(product.getTitle());
+        assertThat(productController
+                .findAll()
+                .getStatusCode())
+                .isEqualTo(HttpStatus.OK);
     }
 
     @Test
-    public void findByIdTest() throws Exception {
+    public void findAll_WithProductEntityList_ShouldReturnListSize1() throws Exception {
+        List<ProductEntity> productList = new ArrayList<>();
+        productList.add(product);
+
+        when(productService.findAll()).thenReturn(productList);
+
+        assertThat(productController
+                .findAll()
+                .getBody())
+                .size()
+                .isEqualTo(1);
+    }
+
+    @Test
+    public void findAll_WithWithProductEntityList_ShouldReturnListContainingTheEntity()
+            throws Exception {
+        List<ProductEntity> productList = new ArrayList<>();
+        productList.add(product);
+
+        when(productService.findAll()).thenReturn(productList);
+
+        assertThat(productController
+                .findAll()
+                .getBody()
+                .get(0)
+                .getTitle())
+                .isEqualTo(product.getTitle());
+    }
+
+    @Test
+    public void findById_WithProductEntity_ShouldReturnOk() throws Exception {
         when(productService.findById(0)).thenReturn(Optional.of(product));
 
-        assertThat(productController.findById(0).getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(productController.findById(0).getBody().get().getId()).isEqualTo(product.getId());
+        assertThat(productController
+                .findById(0)
+                .getStatusCode())
+                .isEqualTo(HttpStatus.OK);
     }
 
     @Test
-    public void deleteByIdTest() {
+    public void findById_WithProductEntity_ShouldReturnTheEntity() throws Exception {
+        when(productService.findById(0)).thenReturn(Optional.of(product));
+
+        assertThat(productController
+                .findById(0)
+                .getBody()
+                .get()
+                .getId())
+                .isEqualTo(product.getId());
+    }
+
+    @Test
+    public void deleteById_WithProductEntity_ShouldReturnOk() {
         long productId = 0;
 
         when(productService.findById(productId)).thenReturn(Optional.of(product));
         when(productService.deleteById(productId)).thenReturn(true);
 
-        assertThat(productController.deleteById(productId).getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(productController
+                .deleteById(productId)
+                .getStatusCode())
+                .isEqualTo(HttpStatus.OK);
     }
 
     @Test
-    public void deleteAllTest() {
+    public void deleteAll_ShouldReturnOk() {
         assertThat(productController.deleteAll().getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 }

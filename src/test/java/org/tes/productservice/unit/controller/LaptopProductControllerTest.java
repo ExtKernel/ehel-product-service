@@ -52,8 +52,23 @@ public class LaptopProductControllerTest {
         String screenResolution = "1920x1080";
         boolean hasBacklit = false;
         String model = "ThinkPad X1";
-        laptopProduct = getMockedLaptopProductEntity(title, condition, price, quantity, cpu, ramCapacity, ramType, gpuType, goodFor, releaseDate,
-                comesWithCharger, screenType, screenResolution, hasBacklit, model);
+        laptopProduct = getMockedLaptopProductEntity(
+                title,
+                condition,
+                price,
+                quantity,
+                cpu,
+                ramCapacity,
+                ramType,
+                gpuType,
+                goodFor,
+                releaseDate,
+                comesWithCharger,
+                screenType,
+                screenResolution,
+                hasBacklit,
+                model
+        );
     }
 
     @BeforeEach
@@ -63,8 +78,11 @@ public class LaptopProductControllerTest {
     }
 
     @Test
-    public void saveTest() throws Exception {
-        assertThat(laptopProductController.saveLaptop(laptopProduct).getStatusCode()).isEqualTo(HttpStatus.OK);
+    public void save_WithLaptopProductEntity_ShouldReturnOk() throws Exception {
+        assertThat(laptopProductController
+                .saveLaptop(laptopProduct)
+                .getStatusCode())
+                .isEqualTo(HttpStatus.OK);
     }
 
 // To be implemented
@@ -74,37 +92,89 @@ public class LaptopProductControllerTest {
 //    }
 
     @Test
-    public void findAllTest() throws Exception {
+    public void findAll_WithLaptopProductEntityList_ShouldReturnOk() throws Exception {
         List<LaptopProductEntity> laptopProductList = new ArrayList<>();
         laptopProductList.add(laptopProduct);
 
         when(laptopProductService.findAll()).thenReturn(laptopProductList);
 
-        assertThat(laptopProductController.findAllLaptops().getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(laptopProductController.findAllLaptops().getBody()).size().isEqualTo(1);
-        assertThat(laptopProductController.findAllLaptops().getBody().get(0).getTitle()).isEqualTo(laptopProduct.getTitle());
+        assertThat(laptopProductController
+                .findAllLaptops()
+                .getStatusCode())
+                .isEqualTo(HttpStatus.OK);
     }
 
     @Test
-    public void findByIdTest() throws Exception {
+    public void findAll_WithLaptopProductEntityList_ShouldReturnListSize1() throws Exception {
+        List<LaptopProductEntity> laptopProductList = new ArrayList<>();
+        laptopProductList.add(laptopProduct);
+
+        when(laptopProductService.findAll()).thenReturn(laptopProductList);
+
+        assertThat(laptopProductController
+                .findAllLaptops()
+                .getBody())
+                .size()
+                .isEqualTo(1);
+    }
+
+    @Test
+    public void findAll_WithWithLaptopProductEntityList_ShouldReturnListContainingTheEntity()
+            throws Exception {
+        List<LaptopProductEntity> laptopProductList = new ArrayList<>();
+        laptopProductList.add(laptopProduct);
+
+        when(laptopProductService.findAll()).thenReturn(laptopProductList);
+
+        assertThat(laptopProductController
+                .findAllLaptops()
+                .getBody()
+                .get(0)
+                .getTitle())
+                .isEqualTo(laptopProduct.getTitle());
+    }
+
+    @Test
+    public void findById_WithLaptopProductEntity_ShouldReturnOk() throws Exception {
         when(laptopProductService.findById(0)).thenReturn(Optional.of(laptopProduct));
 
-        assertThat(laptopProductController.findLaptopById(0).getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(laptopProductController.findLaptopById(0).getBody().get().getId()).isEqualTo(laptopProduct.getId());
+        assertThat(laptopProductController
+                .findLaptopById(0)
+                .getStatusCode())
+                .isEqualTo(HttpStatus.OK);
     }
 
     @Test
-    public void deleteByIdTest() {
+    public void findById_WithLaptopProductEntity_ShouldReturnTheEntity()
+            throws Exception {
+        when(laptopProductService.findById(0)).thenReturn(Optional.of(laptopProduct));
+
+        assertThat(laptopProductController
+                .findLaptopById(0)
+                .getBody()
+                .get()
+                .getId())
+                .isEqualTo(laptopProduct.getId());
+    }
+
+    @Test
+    public void deleteById_WithLaptopProductEntity_ShouldReturnOk() {
         long laptopProductId = 0;
 
         when(laptopProductService.findById(laptopProductId)).thenReturn(Optional.of(laptopProduct));
         when(laptopProductService.deleteById(laptopProductId)).thenReturn(true);
 
-        assertThat(laptopProductController.deleteLaptopById(laptopProductId).getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(laptopProductController
+                .deleteLaptopById(laptopProductId)
+                .getStatusCode())
+                .isEqualTo(HttpStatus.OK);
     }
 
     @Test
-    public void deleteAllTest() {
-        assertThat(laptopProductController.deleteAllLaptops().getStatusCode()).isEqualTo(HttpStatus.OK);
+    public void deleteAll_ShouldReturnOk() {
+        assertThat(laptopProductController
+                .deleteAllLaptops()
+                .getStatusCode())
+                .isEqualTo(HttpStatus.OK);
     }
 }

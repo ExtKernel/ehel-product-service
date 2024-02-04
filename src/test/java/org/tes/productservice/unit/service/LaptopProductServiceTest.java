@@ -47,26 +47,41 @@ public class LaptopProductServiceTest {
         String screenResolution = "1920x1080";
         boolean hasBacklit = false;
         String model = "ThinkPad X1";
-        laptopProduct = getMockedLaptopProductEntity(title, condition, price, quantity, cpu, ramCapacity, ramType, gpuType, goodFor, releaseDate,
-                comesWithCharger, screenType, screenResolution, hasBacklit, model);
+        laptopProduct = getMockedLaptopProductEntity(
+                title,
+                condition,
+                price,
+                quantity,
+                cpu,
+                ramCapacity,
+                ramType,
+                gpuType,
+                goodFor,
+                releaseDate,
+                comesWithCharger,
+                screenType,
+                screenResolution,
+                hasBacklit,
+                model
+        );
     }
 
     @Test
-    public void saveTest() throws Exception {
+    public void save_WithLaptopProductEntity_ShouldReturnOk() throws Exception {
         when(laptopProductRepository.save(laptopProduct)).thenReturn(laptopProduct);
 
         assertThat(laptopProductService.save(laptopProduct).get()).isEqualTo(laptopProduct);
     }
 
     @Test
-    public void updateTest() throws Exception {
+    public void update_WithLaptopProductEntity_ShouldReturnOk() throws Exception {
         when(laptopProductRepository.save(laptopProduct)).thenReturn(laptopProduct);
 
         assertThat(laptopProductService.update(laptopProduct).get()).isEqualTo(laptopProduct);
     }
 
     @Test
-    public void findAllTest() throws Exception {
+    public void findAll_WithWithLaptopProductEntityList_ShouldReturnEntityList() throws Exception {
         List<LaptopProductEntity> laptopProductList = new ArrayList<>();
         laptopProductList.add(laptopProduct);
 
@@ -76,7 +91,7 @@ public class LaptopProductServiceTest {
     }
 
     @Test
-    public void findByIdTest() throws Exception {
+    public void findById_WithLaptopProductEntity_ShouldReturnTheEntity() throws Exception {
         long laptopProductId = 0;
 
         when(laptopProductRepository.findById(laptopProductId)).thenReturn(Optional.of(laptopProduct));
@@ -85,14 +100,14 @@ public class LaptopProductServiceTest {
     }
 
     @Test
-    public void deleteByIdTest() throws Exception {
+    public void deleteById_WithLaptopProductEntity_ShouldReturnTrue() throws Exception {
         long laptopProductId = 0;
 
         assertThat(laptopProductService.deleteById(laptopProductId)).isEqualTo(true);
     }
 
     @Test
-    public void deleteAllTest() throws Exception {
+    public void deleteAll_WithLaptopProductEntity_ShouldReturnTrue() throws Exception {
         assertThat(laptopProductService.deleteAll()).isEqualTo(true);
     }
 }

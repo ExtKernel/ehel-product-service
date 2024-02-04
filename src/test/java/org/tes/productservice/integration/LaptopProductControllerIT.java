@@ -1,9 +1,11 @@
 package org.tes.productservice.integration;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -39,6 +41,22 @@ public class LaptopProductControllerIT {
 
     private static LaptopProductEntity laptopProduct;
 
+    @Value("${oauthTestAdminUsername}")
+    private String oauthTestAdminUsername;
+
+    @Value("${oauthTestAdminPassword}")
+    private String oauthTestAdminPassword;
+
+    @Value("${tokenEndpointUrl}")
+    private String tokenEndpointUrl;;
+
+    private static String accessToken;
+
+    @BeforeEach
+    public void setUpOauth() throws Exception {
+        accessToken = obtainKeycloakAccessToken(oauthTestAdminUsername, oauthTestAdminPassword, tokenEndpointUrl);
+    }
+
     @BeforeAll
     public static void setUpEntity() {
         String title = "A laptop";
@@ -62,7 +80,10 @@ public class LaptopProductControllerIT {
 
     @Test
     public void saveTest() throws Exception {
-        mvc.perform(post("/laptop").contentType(MediaType.APPLICATION_JSON).content(asJsonString(laptopProduct)))
+        mvc.perform(post("/laptop/secured")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(laptopProduct))
+                        .header("Authorization", "Bearer " + accessToken))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(generateJsonPathExpressions(null, laptopProduct));
@@ -98,7 +119,9 @@ public class LaptopProductControllerIT {
     public void deleteByIdTest() throws Exception {
         laptopProductService.save(laptopProduct);
 
-        mvc.perform(delete("/laptop/{id}", laptopProduct.getId()).contentType(MediaType.APPLICATION_JSON))
+        mvc.perform(delete("/laptop/secured/{id}", laptopProduct.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", "Bearer " + accessToken))
                 .andExpect(status().isOk());
     }
 
@@ -106,7 +129,8 @@ public class LaptopProductControllerIT {
     public void deleteAllTest() throws Exception {
         laptopProductService.save(laptopProduct);
 
-        mvc.perform(delete("/laptop"))
+        mvc.perform(delete("/laptop/secured")
+                        .header("Authorization", "Bearer " + accessToken))
                 .andExpect(status().isOk());
     }
 }

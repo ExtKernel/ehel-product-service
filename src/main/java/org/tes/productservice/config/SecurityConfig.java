@@ -1,6 +1,9 @@
 package org.tes.productservice.config;
 
+import java.util.List;
+import java.util.Map;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
@@ -18,12 +21,13 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
-
 @EnableMethodSecurity
 @EnableWebSecurity
 @Configuration
-public class ProductServiceSecurityConfig {
+public class SecurityConfig {
+
+    @Value("${principalRoleName}")
+    private String principalRoleName;
 
     @Component
     static class KeycloakAuthoritiesConverter implements Converter<Jwt, List<SimpleGrantedAuthority>> {
@@ -50,7 +54,10 @@ public class ProductServiceSecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, KeycloakAuthenticationConverter authenticationConverter) throws Exception {
+    public SecurityFilterChain filterChain(
+            HttpSecurity http,
+            KeycloakAuthenticationConverter authenticationConverter
+    ) throws Exception {
         http.oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(authenticationConverter)));
         http.cors(AbstractHttpConfigurer::disable);
         http.sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
@@ -64,8 +71,7 @@ public class ProductServiceSecurityConfig {
         }));
 
         http.authorizeHttpRequests(requests -> requests
-                .requestMatchers("/generic/secured").hasAuthority("administrator")
-                .requestMatchers("/laptop/secured").hasAuthority("administrator")
+                .requestMatchers("/secured/**").hasAuthority(principalRoleName)
                 .anyRequest().permitAll());
 
         return http.build();

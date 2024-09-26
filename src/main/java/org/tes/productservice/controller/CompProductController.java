@@ -11,36 +11,36 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.tes.productservice.model.LaptopProduct;
-import org.tes.productservice.service.LaptopProductService;
+import org.tes.productservice.model.CompProduct;
+import org.tes.productservice.service.CompProductService;
 
-@RequestMapping("/secured/product/laptop")
+@RequestMapping("/secured/product/comp")
 @RestController
-public class LaptopProductController {
-    private final LaptopProductService service;
+public class CompProductController {
+    private final CompProductService service;
 
     @Autowired
-    public LaptopProductController(LaptopProductService service) {
+    public CompProductController(CompProductService service) {
         this.service = service;
     }
 
     @PostMapping()
-    public LaptopProduct save(@RequestBody LaptopProduct product) {
+    public CompProduct save(@RequestBody CompProduct product) {
         return service.save(Optional.ofNullable(product));
     }
 
     @PutMapping()
-    public LaptopProduct update(@RequestBody LaptopProduct updatedProduct) {
+    public CompProduct update(@RequestBody CompProduct updatedProduct) {
         return service.update(Optional.ofNullable(updatedProduct));
     }
 
     @GetMapping()
-    public List<LaptopProduct> findAll() {
+    public List<CompProduct> findAll() {
         return service.findAll();
     }
 
     @GetMapping("/{id}")
-    public LaptopProduct findById(@PathVariable long id) {
+    public CompProduct findById(@PathVariable long id) {
         return service.findById(id);
     }
 

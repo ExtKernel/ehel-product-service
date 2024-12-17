@@ -7,6 +7,91 @@ Every `/secured` endpoint requires an Oauth2 Bearer token
 that contains the role specified in the `PRINCIPAL_ROLE_NAME` environment variable.
 See the configuration documentation under the **Configuration** section.
 
+# User
+Represents a user.
+
+### Create
+Endpoint: `POST /secured/user`
+
+JSON request body explanation:
+```json
+{
+   "id": "user-unique-id", // Optional. If not specified, will be assigned by the DB
+   "username": "user-username", // Required
+   "password": "user-password", // Required, typically hashed
+   "firstName": "user-first-name", // Required
+   "lastName": "user-last-name", // Required
+   "email": "user-email@example.com", // Required
+   "phone": "user-phone-number", // Optional
+   "country": "user-country", // Optional
+   "city": "user-city", // Optional
+   "address": "user-address", // Optional
+   "apartment": "user-apartment", // Optional
+   "cart": {
+      // See the JSON structure of the Cart object
+   } // Optional: The cart associated with the user
+}
+```
+
+### Find all
+Endpoint: `GET /secured/user`
+
+### Find by ID
+Endpoint: `GET /secured/user/<user-id>`
+
+### Update
+Endpoint: `PUT /secured/user`
+
+The same request body is required as for the **Create** endpoint.
+
+### Delete
+Endpoint: `DELETE /secured/user/<user-id>`
+
+# Cart
+Represents a cart of products.
+
+### Create
+Endpoint: `POST /secured/cart`
+
+JSON request body explanation:
+```json
+{
+   "id": "unique-long-id-for-cart", // Optional. If not specified, will be assigned by the DB
+   "defaultProducts": [
+      {
+         // See the JSON structure of the Default Product object 
+      }
+   ], // Optional
+   "compProducts": [
+      {
+         // See the JSON structure of the Comp Product object 
+      }
+   ], // Optional
+   "laptopProducts": [
+      {
+         // See the JSON structure of the Laptop Product object 
+      }
+   ], // Optional
+}
+```
+The request will not include a user reference.
+Ideally, you should update the user object with the created cart, but not the other way around.
+The same goes for the products: ideally, you should create them **before** adding to the cart. 
+
+### Find all
+Endpoint: `GET /secured/cart`
+
+### Find by ID
+Endpoint: `GET /secured/cart/<cart-id>`
+
+### Update
+Endpoint: `PUT /secured/cart`
+
+The same request body is required as for the **Create** endpoint.
+
+### Delete
+Endpoint: `DELETE /secured/cart/<cart-id>`
+
 # Default Product
 This product type represents a generic product.
 
@@ -16,7 +101,7 @@ Endpoint: `POST /secured/product/default`
 JSON request body explanation:
 ```json
 {
-  "id": "unique-id-for-default-product", // Required
+  "id": "unique-long-id-for-default-product", // Optional. If not specified, will be assigned by the DB
   "title": "product-title", // Required
   "description": "product-description", // Optional
   "condition": "new-or-used-condition", // Required
@@ -48,7 +133,7 @@ Endpoint: `POST /secured/product/comp`
 JSON request body explanation:
 ```json
 {
-  "id": "unique-id-for-comp-product", // Required
+  "id": "unique-long-id-for-comp-product", // Optional. If not specified, will be assigned by the DB
   "title": "product-title", // Required
   "description": "product-description", // Optional
   "condition": "new-or-used-condition", // Required
@@ -91,7 +176,7 @@ Endpoint: `POST /secured/product/laptop`
 JSON request body explanation:
 ```json
 {
-  "id": "unique-id-for-laptop-product", // Required
+  "id": "unique-long-id-for-laptop-product", // Optional. If not specified, will be assigned by the DB
   "title": "product-title", // Required
   "description": "product-description", // Optional
   "condition": "new-or-used-condition", // Required

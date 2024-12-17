@@ -1,13 +1,14 @@
 package org.tes.productservice.service;
 
-import java.util.List;
-import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.tes.productservice.exception.ModelIsNullException;
 import org.tes.productservice.exception.ModelNotFoundException;
+
+import java.util.List;
+import java.util.Optional;
 
 /**
  * A generic class that implements the generic behaviour
@@ -36,7 +37,9 @@ public abstract class GenericCrudService<T, ID> implements CrudService<T, ID> {
 
     @Override
     public List<T> findAll() {
-        return repository.findAll();
+        List<T> list = repository.findAll();
+
+        return list;
     }
 
     @Override

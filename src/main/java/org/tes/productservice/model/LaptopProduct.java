@@ -7,19 +7,12 @@ import com.fasterxml.jackson.databind.ser.std.DateSerializer;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotNull;
-import java.util.Date;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
-@Getter
-@Setter
-@ToString
-@EqualsAndHashCode
-@AllArgsConstructor
+import java.util.Date;
+
+@Data
 @NoArgsConstructor
 @Entity
 public class LaptopProduct extends CompProduct {
@@ -53,9 +46,12 @@ public class LaptopProduct extends CompProduct {
     @Column(name = "model")
     private String model;
 
+//    @JsonBackReference
+//    @ManyToOne
+//    @JoinColumn(name = "cart_id")
+//    private Cart cart;
 
     public LaptopProduct(
-            Long id,
             String title,
             String description,
             String condition,
@@ -74,7 +70,6 @@ public class LaptopProduct extends CompProduct {
             String model
     ) {
         super(
-                id,
                 title,
                 description,
                 condition,
@@ -92,5 +87,18 @@ public class LaptopProduct extends CompProduct {
         this.screenResolution = screenResolution;
         this.hasBacklit = hasBacklit;
         this.model = model;
+    }
+
+    @Override
+    public String toString() {
+        return "LaptopProduct{" +
+                "releaseDate=" + releaseDate +
+                ", comesWithCharger=" + comesWithCharger +
+                ", screenType='" + screenType + '\'' +
+                ", screenResolution='" + screenResolution + '\'' +
+                ", hasBacklit=" + hasBacklit +
+                ", batteryHealth=" + batteryHealth +
+                ", model='" + model + '\'' +
+                '}';
     }
 }

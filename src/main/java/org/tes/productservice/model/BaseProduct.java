@@ -4,20 +4,16 @@ import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
-@Getter
-@Setter
-@ToString
-@EqualsAndHashCode
+import java.io.Serializable;
+
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @MappedSuperclass
-public class BaseProduct {
+public class BaseProduct implements Serializable {
 
     @NotNull
     @Column(name = "title")

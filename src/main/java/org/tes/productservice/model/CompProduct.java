@@ -1,26 +1,12 @@
 package org.tes.productservice.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
-import jakarta.persistence.TableGenerator;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
-@Getter
-@Setter
-@ToString
-@EqualsAndHashCode
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Entity
@@ -82,8 +68,12 @@ public class CompProduct extends BaseProduct {
     @Column(name = "good_for")
     private String goodFor;
 
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "cart_id")
+    private Cart cart;
+
     public CompProduct(
-            Long id,
             @NotNull String title,
             String description,
             @NotNull String condition,
@@ -108,5 +98,23 @@ public class CompProduct extends BaseProduct {
         this.ramType = ramType;
         this.gpuType = gpuType;
         this.goodFor = goodFor;
+    }
+
+    @Override
+    public String toString() {
+        return "CompProduct{" +
+                "goodFor='" + goodFor + '\'' +
+                ", os='" + os + '\'' +
+                ", storageUnitCapacity=" + storageUnitCapacity +
+                ", storageUnitType='" + storageUnitType + '\'' +
+                ", gpuVramType='" + gpuVramType + '\'' +
+                ", gpuVramCapacity=" + gpuVramCapacity +
+                ", gpuModel='" + gpuModel + '\'' +
+                ", gpuType='" + gpuType + '\'' +
+                ", ramType='" + ramType + '\'' +
+                ", ramCapacity=" + ramCapacity +
+                ", cpu='" + cpu + '\'' +
+                ", id=" + id +
+                '}';
     }
 }

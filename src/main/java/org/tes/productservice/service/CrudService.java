@@ -1,8 +1,9 @@
 package org.tes.productservice.service;
 
+import org.tes.productservice.exception.ModelNotFoundException;
+
 import java.util.List;
 import java.util.Optional;
-import org.tes.productservice.exception.ModelNotFoundException;
 
 /**
  * An interface for a generic CRUD {@link org.springframework.stereotype.Service}.

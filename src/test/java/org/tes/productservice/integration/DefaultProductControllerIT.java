@@ -1,26 +1,28 @@
 package org.tes.productservice.integration;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.ArrayList;
-import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.Profile;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.tes.productservice.model.DefaultProduct;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 @Profile("test")
 @TestPropertySource(locations = "classpath:application-integrationtest.properties")
-public class DefaultProductServiceIT extends AbstractIntegrationTest {
+public class DefaultProductControllerIT extends AbstractIntegrationTest {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Test
     public void givenCorrectDefaultProduct_whenSave_thenReturnSavedDefaultProduct()
             throws Exception {
         DefaultProduct defaultProduct = buildDefaultProduct();
+        defaultProduct.setId(1L);
 
         assertEquals(defaultProduct, performPostRequestExpectedSuccess(
                 "/secured/product/default",
@@ -33,6 +35,7 @@ public class DefaultProductServiceIT extends AbstractIntegrationTest {
     public void givenCorrectDefaultProduct_whenUpdate_thenReturnUpdatedDefaultProduct()
             throws Exception {
         DefaultProduct defaultProduct = buildDefaultProduct();
+        defaultProduct.setId(1L);
 
         performPostRequest(
                 "/secured/product/default",

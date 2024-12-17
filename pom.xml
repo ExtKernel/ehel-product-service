@@ -108,7 +108,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.tes.EurekaEnabledProductServiceApplication</mainClass>
+                    <mainClass>org.tes.productservice.ProductServiceApplication</mainClass>
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>

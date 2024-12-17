@@ -1,19 +1,15 @@
 package org.tes.productservice.controller;
 
-import java.util.List;
-import java.util.Optional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.tes.productservice.model.CompProduct;
 import org.tes.productservice.service.CompProductService;
 
+import java.util.List;
+import java.util.Optional;
+
+@Slf4j
 @RequestMapping("/secured/product/comp")
 @RestController
 public class CompProductController {

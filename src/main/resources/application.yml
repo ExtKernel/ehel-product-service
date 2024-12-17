@@ -2,8 +2,8 @@ principalRoleName: ${PRINCIPAL_ROLE_NAME:administrator}
 
 eureka:
   client:
-    service-url:
-      default-zone: ${EUREKA_URI:http://localhost:8761/eureka}
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
 logging:
   level:
     root: warn
@@ -40,6 +40,6 @@ spring:
         jwt:
           issuer-uri: ${OAUTH2_PROVIDER_ISSUER_URL}
         opaquetoken:
-          client-secret: ${OAUTH2_PROVIDER_CLIENT_ID}
-          client-id: ${OAUTH2_PROVIDER_CLIENT_SECRET}
+          client-id: ${OAUTH2_PROVIDER_CLIENT_ID}
+          client-secret: ${OAUTH2_PROVIDER_CLIENT_SECRET}
           introspection-uri: ${OAUTH2_PROVIDER_INTROSPECTION_URL}

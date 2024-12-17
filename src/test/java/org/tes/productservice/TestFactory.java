@@ -1,15 +1,13 @@
-package org.tes.productservice.integration;
+package org.tes.productservice;
+
+import org.tes.productservice.model.*;
 
 import java.util.Date;
-import org.tes.productservice.model.CompProduct;
-import org.tes.productservice.model.DefaultProduct;
-import org.tes.productservice.model.LaptopProduct;
 
 public class TestFactory {
 
     public CompProduct buildCompProduct() {
         return new CompProduct(
-                1L,
                 "test-comp-product-title",
                 "test-comp-product-description",
                 "test-comp-product-condition",
@@ -25,7 +23,6 @@ public class TestFactory {
 
     public LaptopProduct buildLaptopProduct() {
         return new LaptopProduct(
-                1L,
                 "test-laptop-product-title",
                 "test-laptop-product-description",
                 "test-laptop-product-condition",
@@ -47,12 +44,33 @@ public class TestFactory {
 
     public DefaultProduct buildDefaultProduct() {
         return new DefaultProduct(
-                1L,
                 "test-default-product-title",
                 "test-default-product-description",
                 "test-default-product-condition",
                 10,
                 1
+        );
+    }
+
+    public User buildUser() {
+        return new User(
+                "test-username",
+                "test-password",
+                "test-firstname",
+                "test-lastname",
+                "test-email"
+        );
+    }
+
+    public Cart buildCart() {
+//        List<DefaultProduct> defaultProducts = Collections.singletonList(buildDefaultProduct());
+//        List<CompProduct> compProducts = Collections.singletonList(buildCompProduct());
+//        List<LaptopProduct> laptopProducts = Collections.singletonList(buildLaptopProduct());
+
+        return new Cart(
+//                defaultProducts,
+//                compProducts,
+//                laptopProducts
         );
     }
 }

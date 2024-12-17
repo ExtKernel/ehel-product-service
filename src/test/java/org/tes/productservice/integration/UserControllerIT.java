@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.Profile;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.tes.productservice.model.CompProduct;
+import org.tes.productservice.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,65 +15,65 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Profile("test")
 @TestPropertySource(locations = "classpath:application-integrationtest.properties")
-public class CompProductControllerIT extends AbstractIntegrationTest {
+public class UserControllerIT extends AbstractIntegrationTest {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Test
-    public void givenCorrectCompProduct_whenSave_thenReturnSavedCompProduct()
+    public void givenCorrectUser_whenSave_thenReturnSavedUser()
             throws Exception {
-        CompProduct compProduct = buildCompProduct();
-        compProduct.setId(1L);
+        User user = buildUser();
+        user.setId(1L);
 
-        assertEquals(compProduct, performPostRequestExpectedSuccess(
-                "/secured/product/comp",
-                compProduct,
-                CompProduct.class
+        assertEquals(user, performPostRequestExpectedSuccess(
+                "/secured/user",
+                user,
+                User.class
         ));
     }
 
     @Test
-    public void givenCorrectCompProduct_whenUpdate_thenReturnUpdatedCompProduct()
+    public void givenCorrectUser_whenUpdate_thenReturnUpdatedUser()
             throws Exception {
-        CompProduct compProduct = buildCompProduct();
-        compProduct.setId(1L);
+        User user = buildUser();
+        user.setId(1L);
 
         performPostRequest(
-                "/secured/product/comp",
-                compProduct,
-                CompProduct.class,
+                "/secured/user",
+                user,
+                User.class,
                 MockMvcResultMatchers.status().isOk()
         );
 
-        compProduct.setCpu("new-test-comp-cpu");
+        user.setCity("new-test-city");
 
-        assertEquals(compProduct, performPutRequestExpectedSuccess(
-                "/secured/product/comp",
-                compProduct,
-                CompProduct.class
+        assertEquals(user, performPutRequestExpectedSuccess(
+                "/secured/user",
+                user,
+                User.class
         ));
     }
 
     @Test
-    public void givenCorrectCompProducts_whenFindAll_thenReturnCompProducts()
+    public void givenCorrectUsers_whenFindAll_thenReturnUsers()
             throws Exception {
-        CompProduct compProduct1 = buildCompProduct();
-        compProduct1.setId(1L);
-        CompProduct compProduct2 = buildCompProduct();
-        compProduct2.setId(2L);
-        CompProduct compProduct3 = buildCompProduct();
-        compProduct3.setId(3L);
+        User user1 = buildUser();
+        user1.setId(1L);
+        User user2 = buildUser();
+        user2.setId(2L);
+        User user3 = buildUser();
+        user3.setId(3L);
 
-        List<CompProduct> compProducts = new ArrayList<>();
-        compProducts.add(compProduct1);
-        compProducts.add(compProduct2);
-        compProducts.add(compProduct3);
+        List<User> users = new ArrayList<>();
+        users.add(user1);
+        users.add(user2);
+        users.add(user3);
 
-        compProducts.forEach(compProduct -> {
+        users.forEach(user -> {
             try {
                 performPostRequest(
-                        "/secured/product/comp",
-                        compProduct,
-                        CompProduct.class,
+                        "/secured/user",
+                        user,
+                        User.class,
                         MockMvcResultMatchers.status().isOk()
                 );
             } catch (Exception e) {
@@ -82,9 +82,9 @@ public class CompProductControllerIT extends AbstractIntegrationTest {
         });
 
         List<String> expectedJsonStrings = new ArrayList<>();
-        compProducts.forEach(compProduct -> {
+        users.forEach(user -> {
             try {
-                String jsonString = objectMapper.writeValueAsString(compProduct);
+                String jsonString = objectMapper.writeValueAsString(user);
                 expectedJsonStrings.add(jsonString);
             } catch (JsonProcessingException e) {
                 throw new RuntimeException(e);
@@ -92,7 +92,7 @@ public class CompProductControllerIT extends AbstractIntegrationTest {
         });
 
         List<?> actualList = performGetRequestExpectedSuccess(
-                "/secured/product/comp",
+                "/secured/user",
                 List.class
         );
 

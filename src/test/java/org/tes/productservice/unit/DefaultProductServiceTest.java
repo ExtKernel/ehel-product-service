@@ -1,12 +1,5 @@
 package org.tes.productservice.unit;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -15,6 +8,14 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.tes.productservice.model.DefaultProduct;
 import org.tes.productservice.persistence.DefaultProductRepository;
 import org.tes.productservice.service.DefaultProductService;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class DefaultProductServiceTest {

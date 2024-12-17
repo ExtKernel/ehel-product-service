@@ -1,7 +1,5 @@
 package org.tes.productservice.integration;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -21,6 +19,9 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.tes.productservice.TestFactory;
+
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @TestInstance(Lifecycle.PER_CLASS)
 @AutoConfigureMockMvc(addFilters = false)

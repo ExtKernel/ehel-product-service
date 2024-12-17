@@ -31,3 +31,4 @@ build/
 
 ### VS Code ###
 .vscode/
+/sync01-vm-env.env

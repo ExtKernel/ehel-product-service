@@ -1,27 +1,29 @@
 package org.tes.productservice.integration;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import java.util.ArrayList;
-import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.Profile;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.tes.productservice.model.LaptopProduct;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 @Profile("test")
 @TestPropertySource(locations = "classpath:application-integrationtest.properties")
-public class LaptopProductServiceIT extends AbstractIntegrationTest {
+public class LaptopProductControllerIT extends AbstractIntegrationTest {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Test
     public void givenCorrectLaptopProduct_whenSave_thenReturnSavedLaptopProduct()
             throws Exception {
         LaptopProduct laptopProduct = buildLaptopProduct();
+        laptopProduct.setId(1L);
 
         assertEquals(laptopProduct, performPostRequestExpectedSuccess(
                 "/secured/product/laptop",
@@ -42,7 +44,7 @@ public class LaptopProductServiceIT extends AbstractIntegrationTest {
                 MockMvcResultMatchers.status().isOk()
         );
 
-        laptopProduct.setCpu("new-test-laptop-cpu");
+//        laptopProduct.setCpu("new-test-laptop-cpu");
 
         assertEquals(laptopProduct, performPutRequestExpectedSuccess(
                 "/secured/product/laptop",

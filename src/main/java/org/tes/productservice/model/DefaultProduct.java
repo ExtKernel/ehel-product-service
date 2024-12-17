@@ -1,21 +1,12 @@
 package org.tes.productservice.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
-@Getter
-@Setter
-@ToString
-@EqualsAndHashCode
+@Data
 @NoArgsConstructor
 @Entity
 public class DefaultProduct extends BaseProduct {
@@ -28,8 +19,12 @@ public class DefaultProduct extends BaseProduct {
     )
     private Long id;
 
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "cart_id")
+    private Cart cart;
+
     public DefaultProduct(
-            Long id,
             @NotNull String title,
             String description,
             @NotNull String condition,
@@ -44,5 +39,12 @@ public class DefaultProduct extends BaseProduct {
                 quantity
         );
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "DefaultProduct{" +
+                "id=" + id +
+                '}';
     }
 }

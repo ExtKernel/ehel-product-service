@@ -1,6 +1,6 @@
 package org.tes.productservice.config;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -43,7 +43,7 @@ public class SecurityConfig {
     }
 
     @Component
-    @AllArgsConstructor
+    @RequiredArgsConstructor
     static class KeycloakAuthenticationConverter implements Converter<Jwt, JwtAuthenticationToken> {
         private final KeycloakAuthoritiesConverter authoritiesConverter;
 

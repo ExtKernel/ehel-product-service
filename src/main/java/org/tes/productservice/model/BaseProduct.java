@@ -3,17 +3,18 @@ package org.tes.productservice.model;
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
-import java.io.Serializable;
-
-@Data
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode
+@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 @MappedSuperclass
-public class BaseProduct implements Serializable {
+public class BaseProduct {
 
     @NotNull
     @Column(name = "title")
